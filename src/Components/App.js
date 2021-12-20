@@ -27,7 +27,7 @@ function App() {
           <BrowserRouter>
 
             <Routes>
-              <Route path="/" element={<Home tests={tests} />} />
+              <Route path="Exam-Portal-App/" element={<Home tests={tests} />} />
               <Route path="/finish" element={<Finish />} />
               <Route path="/test/:id" element={<Test tests={tests} />} />
             </Routes>

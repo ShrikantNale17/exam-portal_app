@@ -77,11 +77,11 @@ function Test(props) {
     useEffect(() => {
         setScore(0)
         for (let i = 0; i < answers.length; i++) {
-            console.log(questions[i].correctOptionIndex)
-            console.log(answers[i])
+            // console.log(questions[i].correctOptionIndex)
+            // console.log(answers[i])
             if (Array.isArray(answers[i])) {
-                console.log("ans =" + answers[i].sort())
-                console.log(answers[i].map(Number))
+                // console.log("ans =" + answers[i].sort())
+                // console.log(answers[i].map(Number))
                 const newArr = answers[i].map(Number)
                 if (JSON.stringify(questions[i].correctOptionIndex) === JSON.stringify(newArr)) {
                     setScore(prev => prev + 1)
