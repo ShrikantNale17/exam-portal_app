@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Question from './Question'
 
 function Test(props) {
 
@@ -11,30 +12,46 @@ function Test(props) {
     // console.log(location.state)
     // window.onload = window.location.href = url
 
-    const { id, name, questions } = location.state
-
+    const { id, name, questions } = location.state.test
+    console.log("qnum="+location.state.q_id)
+    console.log(questions.filter((question,index) => question._id === location.state.q_id))
+    console.log(questions.indexOf(questions.filter((question,index) => question._id === location.state.q_id)[0]))
     const ansArray = JSON.parse(localStorage.getItem(`answers${id}`)) === null ? Array(questions.length).fill(null) : JSON.parse(localStorage.getItem(`answers${id}`))
 
-    const [question, setQuestion] = useState(questions[0])
-    const [qnum, setQnum] = useState(0)
+    const newQnum = location.state.qnum ? location.state.qnum : 0
+    console.log(newQnum + ".....")
+    const [question, setQuestion] = useState()
+    const [qnum, setQnum] = useState(newQnum)
     const [answers, setAnswers] = useState(ansArray)
-    const [tabChange, setTabChange] = useState(false)
-    const [warnings, setWarnings] = useState(0)
-    const [score, setScore] = useState(0)
-    console.log(JSON.parse(localStorage.getItem("answers")))
-
-    document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-            setTabChange(true)
-        } else {
-            setTabChange(false)
-        }
-
-    })
-
-    console.log("##"+window.frames.location.href)
-
+    // const [tabChange, setTabChange] = useState(false)
+    // const [warnings, setWarnings] = useState(0)
+    // const [score, setScore] = useState(0)
+    console.log(JSON.parse(localStorage.getItem(`answers${id}`)))
     useEffect(() => {
+        setQnum(newQnum)
+        console.log(window.location)
+        console.log(window.history)
+    },[window.location.pathname])
+    // console.log(window.location)
+    /* 
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                setTabChange(true)
+            } else {
+                setTabChange(false)
+            }
+    
+        }) */
+    /* 
+        window.addEventListener("focus", function (e) {
+    
+            console.log(e)
+            setTabChange(true)
+        })
+    
+        console.log("##" + window.frames.location.href) */
+
+    /* useEffect(() => {
 
         if (tabChange) {
             if (warnings === 3) {
@@ -43,15 +60,24 @@ function Test(props) {
                 setWarnings(prevWarn => prevWarn + 1)
                 alert(`Warning ${warnings + 1}: Don't switch your current window!!!`)
             }
+            setTabChange(false)
         }
     }, [tabChange])
 
-    console.log("Warnings = " + warnings)
+    console.log("Warnings = " + warnings) */
 
     useEffect(() => {
         console.log(questions.length + " " + qnum)
         setQuestion(questions[qnum])
+        navigate(`/exam-portal_app/test/${id}/${questions[qnum]._id}`, {state: {test: location.state.test, qnum: qnum}})
+        console.log(questions[qnum]._id)
     }, [qnum])
+
+    useEffect(() => {
+
+        localStorage.setItem(`answers${id}`, JSON.stringify(answers))
+
+    }, [answers])
 
     function setAnswer(e) {
         const { type, value } = e.target
@@ -65,57 +91,40 @@ function Test(props) {
                             answer.includes(value) ?
                                 answer = answer.filter(ans => ans !== value) :
                                 [...answer, value] :
-
-                        // arr = arr.push(value) :
                         value :
                     answer)
         }))
     }
 
-
-
-    useEffect(() => {
-        setScore(0)
+    function setResult() {
+        let Score = 0
         for (let i = 0; i < answers.length; i++) {
-            // console.log(questions[i].correctOptionIndex)
-            // console.log(answers[i])
+            console.log(questions[i].correctOptionIndex)
+            console.log(answers[i])
             if (Array.isArray(answers[i])) {
-                // console.log("ans =" + answers[i].sort())
-                // console.log(answers[i].map(Number))
+                console.log("ans =" + answers[i].sort())
+                console.log(answers[i].map(Number))
                 const newArr = answers[i].map(Number)
                 if (JSON.stringify(questions[i].correctOptionIndex) === JSON.stringify(newArr)) {
-                    setScore(prev => prev + 1)
+                    Score++
                 }
             }
             else if (questions[i].correctOptionIndex === parseInt(answers[i])) {
-                setScore(prev => prev + 1)
+                Score++
             }
         }
-        localStorage.setItem(`answers${id}`, JSON.stringify(answers))
+        localStorage.setItem(`answers${id}`, null)
+        navigate(`/exam-portal_app/finish`, { state: { score: Score, questions: questions.length, testName: name } })
+    }
 
-    }, [answers])
-    // console.log("Score = " + score)
-
-    const optionElements = question.options.map((option, index) => {
+    /* const optionElements = question.options.map((option, index) => {
 
         const optType = question.type === "Multiple-Response" ? "checkbox" : "radio"
         const name = question.type === "Multiple-Response" ? `checkbox${index}` : "option"
-        // const setOn = optType === "checkbox" ? true : false
-        // const ans = answers[qnum] !== null ? answers[qnum] : ""
         let checkedValue = parseInt(answers[qnum]) === index
-        // console.log(checkedValue)
-        // const valCheck = question.type === "Multiple-Response" ? answers[qnum].includes(index) :
-        // console.log(valCheck)
-        /* 
-        if (answers[qnum] !== null)
-            console.log(answers[0].option) */
-        // console.log(Array.isArray(answers[qnum]))
         if (Array.isArray(answers[qnum])) {
             checkedValue = answers[qnum].includes(String(index))
-            // console.log(checkedValue + " *** ")
         }
-        // console.log(answers[qnum] !== null && answers[qnum].includes(index) + `${index}`)
-        // console.log(answers[qnum], checkedValue)
 
         return (
             <div className={optType} key={index}>
@@ -131,23 +140,25 @@ function Test(props) {
                 </label>
             </div>
         )
-    })
+    }) */
 
-    function setResult() {
-        navigate(`/finish`, { state: { score: score, questions: questions.length, testName: name } })
-    }
 
-    // console.log("All answered = " + answers.every(item => item !== null))
-    // console.log(Array.isArray(answers[1]))
+
     return (
         <div className="col-md-12">
             <div className="panel panel-default" style={{ userSelect: "none" }}>
                 <div className="panel-heading">{name}</div>
                 <div className="panel-body" style={{ height: "185px" }}>
-                    <form>
+                    {/* <form>
                         <label>{question.questionText}</label>
                         {optionElements}
-                    </form>
+                    </form> */}
+                    {question && <Question
+                        question={question}
+                        answers={answers}
+                        qnum={qnum}
+                        setAnswer={setAnswer}
+                    />}
                 </div>
                 <div className="panel-footer">
                     <div className="btn btn-primary" onClick={() => qnum > 0 && setQnum(prev => prev - 1)} style={qnum === 0 ? { opacity: "40%", marginRight: "5px", pointerEvents: "none" } : { marginRight: "5px" }}>Previous</div>

@@ -17,7 +17,7 @@ function Finish() {
                     </center>
                 </div>
             </div>
-            <center><Link to='/' className="btn btn-primary">Go to Home</Link></center>
+            <center><Link to='/exam-portal_app' className="btn btn-primary">Go to Home</Link></center>
         </div>
     )
 }

@@ -10,7 +10,7 @@ function TableRow(props) {
     function setTest() {
         localStorage.setItem("isTestStarted", JSON.stringify(true))
         // localStorage.setItem("answers",null)
-        navigate(`/test/${_id}`,{state: {id: _id, name: name, questions: questions}})
+        navigate(`/exam-portal_app/test/${_id}`,{state: {test: {id: _id, name: name, questions: questions}}})
     }
 
     return (
