@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/exam-portal_app/static/js/main.04ea3bfd.js",
+    "main.js": "/exam-portal_app/static/js/main.c4c85430.js",
     "index.html": "/exam-portal_app/index.html",
-    "main.04ea3bfd.js.map": "/exam-portal_app/static/js/main.04ea3bfd.js.map"
+    "main.c4c85430.js.map": "/exam-portal_app/static/js/main.c4c85430.js.map"
   },
   "entrypoints": [
-    "static/js/main.04ea3bfd.js"
+    "static/js/main.c4c85430.js"
   ]
 }
