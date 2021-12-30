@@ -27,15 +27,9 @@ function App() {
           <BrowserRouter>
 
             <Routes>
-<<<<<<< HEAD
               <Route path="/exam-portal_app" element={<Home tests={tests} />} />
               <Route path="/exam-portal_app/finish" element={<Finish />} />
               <Route path="/exam-portal_app/test/:id/*" element={<Test tests={tests} />} />
-=======
-              <Route path="exam-portal_app/" element={<Home tests={tests} />} />
-              <Route path="/finish" element={<Finish />} />
-              <Route path="/test/:id" element={<Test tests={tests} />} />
->>>>>>> 09155e0e047405fbdae80ff8c5aaf8ad0525a032
             </Routes>
           </BrowserRouter>
         </div> :
