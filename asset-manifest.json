@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/Exam-Portal-App/static/js/main.f8fec480.js",
-    "index.html": "/Exam-Portal-App/index.html",
-    "main.f8fec480.js.map": "/Exam-Portal-App/static/js/main.f8fec480.js.map"
+    "main.js": "/exam-portal_app/static/js/main.f8fec480.js",
+    "index.html": "/exam-portal_app/index.html",
+    "main.f8fec480.js.map": "/exam-portal_app/static/js/main.f8fec480.js.map"
   },
   "entrypoints": [
     "static/js/main.f8fec480.js"
