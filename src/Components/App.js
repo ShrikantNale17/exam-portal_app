@@ -10,8 +10,8 @@ function App() {
   const [tests, setTest] = useState([])
   const [error, setError] = useState("")
 
-  useEffect(() => {
-    axios("http://interviewapi.stgbuild.com/getQuizData")
+  useEffect(async() => {
+    await axios("http://interviewapi.stgbuild.com/getQuizData")
       .then(res => setTest(res.data.tests))
       .catch(error => setError(error.message))
   }, [])
