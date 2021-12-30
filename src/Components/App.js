@@ -3,16 +3,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Test from "./Test"
 import Finish from "./Finish"
-import axios from 'axios'
+// import axios from 'axios'
+import api from '../API/api'
 
 function App() {
 
   const [tests, setTest] = useState([])
   const [error, setError] = useState("")
 
-  useEffect(async() => {
-    await axios("http://interviewapi.stgbuild.com/getQuizData")
+  /* useEffect(async() => {
+    await axios.get("http://interviewapi.stgbuild.com/getQuizData")
       .then(res => setTest(res.data.tests))
+      .catch(error => setError(error.message))
+  }, []) */
+
+  useEffect(async() => {
+    await api.get("/tests")
+      .then(res => setTest(res.data))
       .catch(error => setError(error.message))
   }, [])
 
